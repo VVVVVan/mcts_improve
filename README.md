@@ -21,7 +21,7 @@ Improve the MCTS by NN, NEC, EVA.
 When you try to run, the varibale you can change are:
 - All the variable in `args` in `main.py`, `play.py`.
     - The `checkpoint` in `main.py` and `play.py` must match for the players to use proper NN. 
-- The game could be 6*6 or 8*8.
+- The game could be 6\*6 or 8\*8.
 ```
 python3 main.py # > outputfile
 ```
@@ -30,12 +30,19 @@ or
 ./run.sh
 ```
 
+## Next steps
+Van 
+- Run 8\*8 Othello games
+- Run Vanilla MCTS with UCT and NN
+
 ## Contributing
 **TODO**
 
 ## Authors
 
 * **Fan Shen** - *Initial work* - [VVVVVan](https://github.com/VVVVVan)
+* **Yuju Lee** - Please add your info
+* **Audrina Zhou** - Please add your info
 
 ## License
 
