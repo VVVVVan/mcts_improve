@@ -1,0 +1,14 @@
+*.pyc
+.DS_Store
+
+/temp/
+/20_6checkpoints/
+/.project
+/.pydevproject
+
+# checkpoint
+checkpoints/
+
+# For PyCharm users
+.idea/
+
