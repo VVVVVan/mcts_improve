@@ -2,7 +2,7 @@ import Arena
 from MCTS import MCTS
 from othello.OthelloGame import OthelloGame
 from othello.OthelloPlayers import RandomPlayer, GreedyOthelloPlayer
-from othello.pytorch.NNet import NNetWrapper as NNet
+from othello.NNet import NNetWrapper as NNet
 import numpy as np
 from utils import *
 
