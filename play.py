@@ -13,11 +13,11 @@ Remember to store the ouput in a file, so that could be further used to plot.
 args = dotdict({ 
     'numIters': 20,
     'numGames': 100,
-    'checkpoint': './20_6checkpoints/',
+    'checkpoint': './20_8checkpoints/',
 })
 
 if __name__ == "__main__":
-    g = OthelloGame(6)
+    g = OthelloGame(8)
 
     # all players
     rp = RandomPlayer(g).play
