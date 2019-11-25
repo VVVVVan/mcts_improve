@@ -1,11 +1,11 @@
 #!/bin/bash
-FILE=./20_6Othello
+FILE=./20_8Othello
 if ! [ -d "$FILE" ]; then
     mkdir $FILE
 fi
 
-outputFile="/20_6text.txt"
-resultFile="/20_6result.txt"
+outputFile="/20_8text.txt"
+resultFile="/20_8result.txt"
 
 python3 main.py > $FILE$outputFile
 python3 play.py > $FILE$resultFile
