@@ -11,10 +11,10 @@ This script is used to plot the time and win for each iteration.
 Need an input file to analyze.
 """
 args = dotdict({ 
-    'FILE':"./20_6Othello", # File to store plots
-    'AVERAGETIME': "/20_6Average_time.png", # plots names
-    'FRACTIONWIN': "/20_6Fraction_win.png",
-    'TRAINTIME': "/20_6Train_time.png",
+    'FILE':"./20_8Othello", # File to store plots
+    'AVERAGETIME': "/20_8Average_time.png", # plots names
+    'FRACTIONWIN': "/20_8Fraction_win.png",
+    'TRAINTIME': "/20_8Train_time.png",
 })
 
 if __name__ == "__main__":
@@ -95,6 +95,7 @@ if __name__ == "__main__":
     plt.xticks(np.arange(0,len(data)+1,5))
     plt.yticks(np.arange(0.4, 1.01, 0.1))
     plt.legend(labels = ['random', 'greedy'])
+    plt.axhline(y=1, color='k', linestyle='--')
     plt.xlabel('Iteration')
     plt.ylabel('Fraction of win')
     plt.title('Fraction of win for each iteration\nMCTS vs. random/greedy player')
