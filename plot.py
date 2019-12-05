@@ -61,7 +61,7 @@ if __name__ == "__main__":
             data[iteration][player]['lose'] = int(re.findall(r"[-+]?\d*\.\d+|\d+", line)[1])/100
             data[iteration][player]['draw'] = int(re.findall(r"[-+]?\d*\.\d+|\d+", line)[2])/100
     total_game = data[iteration][player]['win'] + data[iteration][player]['lose'] + data[iteration][player]['draw']
-
+    f.close()
 
     # Deal with data
     random_t = []
@@ -116,6 +116,7 @@ if __name__ == "__main__":
         if "Total:" in line:
             time = float(re.findall(r"[-+]?\d*\.\d+|\d+", line)[0])/60
             train_time.append(time)
+    f.close()
 
     plt.plot(train_time, "g")
     plt.xticks(np.arange(0, len(train_time),5),np.arange(1, len(train_time)+1,5))
@@ -126,3 +127,18 @@ if __name__ == "__main__":
     plt.savefig(TRAINTIME, dpi=300)
 
     plt.show()
+
+    # Store all the result to one file
+    with open(args.FILE+'/results.txt', 'w') as filehandle:
+        filehandle.write('%s\n' % args.FILE)
+        filehandle.write('Fraction of win vs. random\n')
+        filehandle.writelines("%s\n" % win for win in random_w)
+        # filehandle.write('Fraction of win vs. greedy\n')
+        # filehandle.writelines("%s\n" % win for win in greedy_w)
+        filehandle.write('Time use for play vs. random\n')
+        filehandle.writelines("%s\n" % time for time in random_t)
+        # filehandle.write('Time use for play vs. greedy\n')
+        # filehandle.writelines("%s\n" % time for time in greedy_t)
+        filehandle.write('Time use for training\n')
+        filehandle.writelines("%s\n" % t for t in train_time)
+        filehandle.close()
