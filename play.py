@@ -13,7 +13,7 @@ Remember to store the ouput in a file, so that could be further used to plot.
 args = dotdict({ 
     'numIters': 20,
     'numGames': 100,
-    'checkpoint': './20_8checkpoints/',
+    'checkpoint': './temp/20_8checkpoints/',
 })
 
 if __name__ == "__main__":
