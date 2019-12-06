@@ -70,12 +70,12 @@ class MCTS():
         if s not in self.Ps: 
             return self.rollout(s, canonicalBoard)
         # inside node
-        a = self.UCT(s) # Can change to PUCT
+        a = self.PUCT(s) # Can change to PUCT
         next_s, next_player = self.game.getNextState(canonicalBoard, 1, a)
         next_s = self.game.getCanonicalForm(next_s, next_player)
 
         v = self.search(next_s)
-        self.back_propagation(s, a, v) # Can change to Pback_propagation
+        self.Pback_propagation(s, a, v) # Can change to Pback_propagation
         return -v
 
 
