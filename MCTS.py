@@ -50,37 +50,42 @@ class MCTS():
         """
         Performs one iteration of the MCTS. 
 
-        Action is chose based on UCT. The state is expand and simulated as leaf
-        node is first visited. The neural network is called to return the inital
+        Action is chosen based on UCT or PUCT. The state is expand and simulated as 
+        leaf node is first visited. The neural network is called to return the inital
         policy and value for the node as rollout step. Then the value is back
         progagated to the upper path. The values of Ns, Nsa, Qsa are updated.
 
-        Returns the negative of the value of the current canonicalBoard
+        Returns the negative of the value of the current canonicalBoard.
         """
-
+        # Get the state of this canonical board
         s = self.game.stringRepresentation(canonicalBoard)
 
         # Check if s is the terminal node
         if s not in self.Es:
             self.Es[s] = self.game.getGameEnded(canonicalBoard, 1)
+
         # terminal node
         if self.Es[s]!=0: 
             return -self.Es[s] 
+
         # leaf node
         if s not in self.Ps: 
             return self.rollout(s, canonicalBoard)
+
         # inside node
-        a = self.PUCT(s) # Can change to PUCT
+        a = self.PUCT(s) # Can change to PUCT/UCT
         next_s, next_player = self.game.getNextState(canonicalBoard, 1, a)
         next_s = self.game.getCanonicalForm(next_s, next_player)
 
         v = self.search(next_s)
-        self.Pback_propagation(s, a, v) # Can change to Pback_propagation
+        self.Pback_propagation(s, a, v) # Can change to Pback_propagation/back_propagation
         return -v
 
 
     def UCT(self, s):
         """
+        The UCT of the MCTS.
+
         Return the action with highest upper confidence bound.
         """
         valids = self.Vs[s]
@@ -103,8 +108,9 @@ class MCTS():
 
     def PUCT(self, s):
         """
+        The PUCT of MCTS based on alpha zero.
+
         Return the action with highest polynomial upper confidence bound.
-        Special UCT for Alpha Zero.
         """
         valids = self.Vs[s]
         best_u = -float('inf')
@@ -124,6 +130,8 @@ class MCTS():
 
     def rollout(self, s, canonicalBoard):
         """
+        The rollout for MCTS.
+
         Return the reward for the s.
         """
         self.Ps[s], v = self.nnet.predict(canonicalBoard)
@@ -147,6 +155,8 @@ class MCTS():
 
     def back_propagation(self, s, a, v):
         """
+        The back propoagation for MCTS. 
+
         Updata the new reward to upper path.
         """
         if (s,a) in self.Qsa:
@@ -162,7 +172,9 @@ class MCTS():
 
     def Pback_propagation(self, s, a, v):
         """
-        Updata the new reward to upper path based on Alpha Zero.
+        The back propagation of MCTS based on alpha zero.
+
+        Updata the new reward to upper path.
         """
         if (s,a) in self.Qsa:
             self.Qsa[(s,a)] = (self.Nsa[(s,a)]*self.Qsa[(s,a)] + v)/(self.Nsa[(s,a)]+1)
@@ -173,3 +185,5 @@ class MCTS():
             self.Nsa[(s,a)] = 1
 
         self.Ns[s] += 1
+
+# [END]

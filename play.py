@@ -7,31 +7,37 @@ import numpy as np
 from utils import *
 
 """
-This script is used to get the number of win for trained nn and ramdon/greedy player.
+This script is used to get the number of win for trained NN with ramdon/greedy player.
 Remember to store the ouput in a file, so that could be further used to plot.
 """
+
 args = dotdict({ 
-    'numIters': 20,
-    'numGames': 100,
-    'checkpoint': './temp/20_8checkpoints/',
+    'numIters': 20,                             # Number of iterations.
+    'numGames': 100,                            # Number of game play for each iteration.
+    'checkpoint': './temp/20_8checkpoints/',    # The checkpoint file that store all NN.
 })
 
 if __name__ == "__main__":
-    g = OthelloGame(8)
+    g = OthelloGame(8) # Define the game
 
-    # all players
+    # All players
     rp = RandomPlayer(g).play
     gp = GreedyOthelloPlayer(g).play
 
+    # The first iteration is the random player play with other players
     print("Iteration 0")
+
+    # Random players
     print('Random players')
     arena_r = Arena.Arena(rp, rp, g, display=OthelloGame.display)
     print(arena_r.playGames(args.numGames, verbose=True))
 
+    # Greedy players
     print('Greedy players')
     arena_g = Arena.Arena(rp, gp, g, display=OthelloGame.display)
     print(arena_g.playGames(args.numGames, verbose=True))
 
+    # For other iterations, it is the MCTS player play with other players
     for i in range(1,args.numIters):
         print('Iteration', i)
         filename = 'checkpoint_{i}.pth.tar'.format(i=i)
@@ -51,3 +57,5 @@ if __name__ == "__main__":
         print('Greedy players')
         arena_g = Arena.Arena(n1p, gp, g, display=OthelloGame.display)
         print(arena_g.playGames(args.numGames, verbose=True))
+
+# [END]

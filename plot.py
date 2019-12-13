@@ -8,7 +8,8 @@ from utils import *
 
 """
 This script is used to plot the time and win for each iteration.
-Need an input file to analyze.
+Need at least one input file to analyze which is the output file of play.py.
+The output of main.py could also be the input file but need pass in with the output file of play.py.
 """
 args = dotdict({ 
     'FILE':"./20_8Othello", # File to store plots
@@ -30,12 +31,12 @@ if __name__ == "__main__":
     filename = sys.argv[1]
     assert(os.path.isfile(filename))
 
-    # Get the name of the files
+    # Get the name of the output files for the plot
     AVERAGETIME = args.FILE + args.AVERAGETIME
     FRACTIONWIN = args.FILE + args.FRACTIONWIN
     TRAINTIME = args.FILE + args.TRAINTIME
 
-    # Plot for average time and win for each nn vs players
+    # Get the data to plot from input file
     f = open(filename, 'r')
     data = {}
     iteration = ""
@@ -63,7 +64,7 @@ if __name__ == "__main__":
     total_game = data[iteration][player]['win'] + data[iteration][player]['lose'] + data[iteration][player]['draw']
     f.close()
 
-    # Deal with data
+    # Store the data for plot
     random_t = []
     random_w = []
     greedy_t = []
@@ -79,7 +80,8 @@ if __name__ == "__main__":
         greedy_t.append(sum(times)/len(times))
         greedy_w.append(v['greedy']['win'])
 
-    # plot
+    # Plot for average time and win for each NN vs players
+    # Time for each iteration of play in play.py
     plt.plot(random_t, "g", greedy_t, "r")
     plt.xticks(np.arange(0,len(data)+1,5))
     plt.legend(labels = ['random', 'greedy'])
@@ -91,6 +93,7 @@ if __name__ == "__main__":
 
     plt.show()
 
+    # Number of win for MCTS player with other players
     plt.plot(random_w, "g", greedy_w, "r")
     plt.xticks(np.arange(0,len(data)+1,5))
     plt.yticks(np.arange(0.4, 1.01, 0.1))
@@ -104,12 +107,15 @@ if __name__ == "__main__":
 
     plt.show()
 
-    # plot time used for train
+    # Get the time of training if there are two input files.
     if len(sys.argv) < 3:
         sys.exit()
     filename = sys.argv[2]
+
+    # Check if the file exist
     assert(os.path.isfile(filename))
 
+    # Get the data in file
     f = open(filename, 'r')
     train_time = []
     for line in f.readlines():
@@ -118,6 +124,7 @@ if __name__ == "__main__":
             train_time.append(time)
     f.close()
 
+    # Time used for train
     plt.plot(train_time, "g")
     plt.xticks(np.arange(0, len(train_time),5),np.arange(1, len(train_time)+1,5))
     plt.xlabel('Iteration')
@@ -128,7 +135,7 @@ if __name__ == "__main__":
 
     plt.show()
 
-    # Store all the result to one file
+    # For further analysis, store all the result to one file
     with open(args.FILE+'/results.txt', 'w') as filehandle:
         filehandle.write('%s\n' % args.FILE)
         filehandle.write('Fraction of win vs. random\n')
@@ -142,3 +149,5 @@ if __name__ == "__main__":
         filehandle.write('Time use for training\n')
         filehandle.writelines("%s\n" % t for t in train_time)
         filehandle.close()
+
+# [END]

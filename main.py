@@ -1,12 +1,17 @@
 from Coach import Coach
-from othello.OthelloGame import OthelloGame as Game
+from othello.OthelloGame import OthelloGame
 from othello.NNet import NNetWrapper as nn
 from utils import *
 
+"""
+This script is used to self train the MCTS is several iterations and store the 
+best iteration for the game.
+"""
+
 args = dotdict({
-    'numIters': 20,
+    'numIters': 20,             # Number of iteration for training.
     'numEps': 100,              # Number of complete self-play games to simulate during a new iteration.
-    'tempThreshold': 15,        #
+    'tempThreshold': 15,
     'updateThreshold': 0.6,     # During arena playoff, new neural net will be accepted if threshold or more of games are won.
     'maxlenOfQueue': 200000,    # Number of game examples to train the neural networks.
     'numMCTSSims': 25,          # Number of games moves for MCTS to simulate.
@@ -21,8 +26,8 @@ args = dotdict({
 })
 
 if __name__ == "__main__":
-    g = Game(8)
-    nnet = nn(g)
+    g = OthelloGame(8) # Define the game
+    nnet = nn(g) # Define the NN
 
     if args.load_model:
         nnet.load_checkpoint(args.load_folder_file[0], args.load_folder_file[1])
@@ -31,4 +36,6 @@ if __name__ == "__main__":
     if args.load_model:
         print("Load trainExamples from file")
         c.loadTrainExamples()
-    c.learn()
+    c.learn() # Do the self play and pitting
+
+# [END]

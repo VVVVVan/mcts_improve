@@ -8,8 +8,10 @@ Improve the MCTS by NN, NEC, EVA.
 - `play.py` Play the game in two players by using the NN trained in each iteration (including rejected ones).
 - `plot.py` Plot the final plots, need at least one arg for this to run, see `run.sh` for examples.
 - `run.sh` The example run bash.
-- `20_6Othello` File with all results of 6*6 Othello game in 20 iterations.
-
+- `MCTS.py` The class with MCTS class, including vanilla and alpha zero UCT and backpropagation.
+- `20_6Othello` The directory with all results of 6\*6 Othello game in 20 iterations.
+- `20_8Othello` The directory with all results of 8\*8 Othello game in 20 iterations.
+- `20_8VOthello` The directory with all results of 8\*8 Othello game in 20 iterations with Vanilla MCTS.
 - `othello` The directory with game info inside*.
 - `Coach.py` The class do the self play and learning*.
 - `Arena.py` The class make two player pit with each other*.
@@ -33,8 +35,8 @@ or
 
 ## Next steps
 Fan 
-- Run 8\*8 Othello games
-- Run Vanilla MCTS with UCT and NN
+- Wrap up the code and write the paper.
+
 
 ## Contributing
 **TODO**
